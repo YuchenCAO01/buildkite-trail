@@ -4,7 +4,8 @@ agents:
 steps:
   - label: "Build Frontend"
     command:
-      - "cd pa_frontend && npm install"
+      - "cd pa_frontend && npm update"
+      - "cd pa_frontend && npm install --force"
       - "cd pa_frontend && npm install register-service-worker --save"
       - "cd pa_frontend && npm run build"
     agents:
