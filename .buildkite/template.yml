@@ -1,0 +1,7 @@
+# Used by the 'Add to Buildkite' button in the readme
+agents:
+  queue: "default"
+name: "PA Trail"
+steps:
+  - label: ":pipeline:"
+    command: "buildkite-agent pipeline upload"
