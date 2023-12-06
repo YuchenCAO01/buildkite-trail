@@ -5,9 +5,9 @@ steps:
   - label: "Build Frontend"
     command:
       - "cd pa_frontend && npm update"
-      - "cd pa_frontend && npm install --force"
-      - "cd pa_frontend && npm install register-service-worker --save"
-      - "cd pa_frontend && npm run build"
+      - "npm install --force"
+      - "npm install register-service-worker --save"
+      - "npm run build"
     agents:
       queue: "default"
     # plugins:
