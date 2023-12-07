@@ -7,7 +7,7 @@ COPY . .
 
 RUN mvn clean package
 
-FROM adoptopenjdk/openjdk16:ubi
+FROM adoptopenjdk/openjdk16:ppc64le-centos-jdk-16_36
 
 COPY --from=build /app/target/paPlatypusBackend-0.0.1-SNAPSHOT.jar /usr/local/lib/paPlatypusBackend-0.0.1-SNAPSHOT.jar
 
