@@ -30,13 +30,13 @@ steps:
   #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
   #           - "DATABASE_USER=swen90014_paplatypus_owner"
   #           - "DATABASE_PASSWORD=platypus"
-  - label: "Build and Deploy Backend"
-    command: "docker build -t backend-build -f Dockerfile.backend ."
-    agents:
-      queue: "default"
-    plugins:
-      - docker#v3.8.0:
-          image: "docker"
-          volumes:
-            - ".:/app"
-          workdir: "/app"
+- label: "Build and Deploy Backend"
+  command: "mvn clean install"
+  agents:
+    queue: "default"
+  plugins:
+    - docker#v3.8.0:
+        image: "maven:3.9.6" 
+        volumes:
+          - "./backend:/app" 
+        workdir: "/app" 
