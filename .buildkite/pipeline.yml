@@ -30,6 +30,7 @@ steps:
   #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
   #           - "DATABASE_USER=swen90014_paplatypus_owner"
   #           - "DATABASE_PASSWORD=platypus"
+  
 - label: "Build and Deploy Backend"
   command: "mvn clean install"
   agents:
@@ -40,3 +41,7 @@ steps:
         volumes:
           - "./backend:/app" 
         workdir: "/app" 
+        environment:
+          - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
+          - "DATABASE_USER=swen90014_paplatypus_owner"
+          - "DATABASE_PASSWORD=platypus"
