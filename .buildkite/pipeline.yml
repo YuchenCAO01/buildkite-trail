@@ -17,16 +17,26 @@ steps:
       - docker#v3.8.0:
           image: "node:18"
 
-  - label: "Build Backend"
-    command:
-      - "export PATH=/usr/local/apache-maven-3.9.6/bin:$PATH"
-      - "cd pa_backend && mvn clean install"
+  # - label: "Build Backend"
+  #   command:
+  #     - "export PATH=/usr/local/apache-maven-3.9.6/bin:$PATH"
+  #     - "cd pa_backend && mvn clean install"
+  #   agents:
+  #     queue: "default"
+  #   plugins:
+  #     - docker#v3.8.0:
+  #         image: "maven:3.9.6"
+  #         environment:
+  #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
+  #           - "DATABASE_USER=swen90014_paplatypus_owner"
+  #           - "DATABASE_PASSWORD=platypus"
+  - label: "Build and Deploy Backend"
+    command: "docker build -t backend-build -f Dockerfile.backend ."
     agents:
       queue: "default"
     plugins:
       - docker#v3.8.0:
-          image: "adoptopenjdk/openjdk16:ppc64le-centos-jdk-16_36"
-          environment:
-            - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
-            - "DATABASE_USER=swen90014_paplatypus_owner"
-            - "DATABASE_PASSWORD=platypus"
+          image: "docker"
+          volumes:
+            - ".:/app"
+          workdir: "/app"
