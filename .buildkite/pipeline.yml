@@ -25,7 +25,7 @@ steps:
       queue: "default"
     plugins:
       - docker#v3.8.0:
-          image: "adoptopenjdk:20-jdk-hotspot"
+          image: "adoptopenjdk:21-jdk-hotspot"
           environment:
             - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
             - "DATABASE_USER=swen90014_paplatypus_owner"
