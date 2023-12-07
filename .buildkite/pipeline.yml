@@ -2,6 +2,9 @@ agents:
   queue: "default"
   
 steps:
+  - label: "Print environment variables"
+    command: "env"
+
   - label: "Build Frontend"
     command:
       - "cd pa_frontend && npm update"
@@ -16,6 +19,7 @@ steps:
 
   - label: "Build Backend"
     command:
+      - "export PATH=/usr/local/apache-maven-3.9.6/bin:$PATH"
       - "cd pa_backend && mvn clean install"
     agents:
       queue: "default"
