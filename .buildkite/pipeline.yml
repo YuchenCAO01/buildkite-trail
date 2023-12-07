@@ -30,6 +30,13 @@ steps:
   #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
   #           - "DATABASE_USER=swen90014_paplatypus_owner"
   #           - "DATABASE_PASSWORD=platypus"
+  - label: "Preview Docker Images"
+    command: 
+      - "docker images"
+      - "docker ps"
+    agents:
+      queue: "default"
+
 
   - label: "Build and Deploy Backend"
     command: "mvn clean install"
