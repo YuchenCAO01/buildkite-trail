@@ -2,7 +2,7 @@ agents:
   queue: "default"
   
 steps:
-  - label: "Print environment variables"
+  - label: "Display Environment Variables"
     command: "env"
 
   - label: "Build Frontend"
