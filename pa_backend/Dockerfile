@@ -7,7 +7,7 @@ COPY . .
 
 RUN mvn clean package
 
-FROM openjdk:16
+FROM adoptopenjdk/openjdk16:ubi
 
 COPY --from=build /app/target/paPlatypusBackend-0.0.1-SNAPSHOT.jar /usr/local/lib/paPlatypusBackend-0.0.1-SNAPSHOT.jar
 
