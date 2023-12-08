@@ -17,6 +17,7 @@ steps:
       - docker#v3.8.0:
           image: "node:18"
 
+
   # - label: "Build Backend"
   #   command:
   #     - "export PATH=/usr/local/apache-maven-3.9.6/bin:$PATH"
@@ -30,6 +31,8 @@ steps:
   #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
   #           - "DATABASE_USER=swen90014_paplatypus_owner"
   #           - "DATABASE_PASSWORD=platypus"
+
+
   - label: "Preview Docker Images"
     command: 
       - "docker images"
@@ -38,17 +41,30 @@ steps:
       queue: "default"
 
 
-  - label: "Build and Deploy Backend"
+  - label: "Build Backend"
     command: "cd pa_backend && mvn clean install"
     agents:
       queue: "default"
     plugins:
       - docker#v3.8.0:
           image: "maven:3.9.5" 
-          # volumes:
-          #   - "./backend:/app" 
-          # workdir: "/app" 
           environment:
             - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
             - "DATABASE_USER=swen90014_paplatypus_owner"
             - "DATABASE_PASSWORD=platypus"
+
+
+  - label: "Deploy Backend"
+    command:
+      - "docker pull your-backend-image:tag"  # 从Docker镜像存储库拉取后端镜像
+      - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"  # 运行后端容器
+    agents:
+      queue: "default"
+
+
+  - label: "Deploy Frontend"
+    command:
+      - "docker pull your-frontend-image:tag"  # 从Docker镜像存储库拉取前端镜像
+      - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"  # 运行前端容器
+    agents:
+      queue: "default"
