@@ -165,5 +165,15 @@
 		</resources>
 	</build>
 
+	<!-- 添加 repositories 部分到这里 -->
+	<repositories>
+		<!-- 配置Maven中央仓库的镜像 -->
+		<repository>
+			<id>aliyunmaven</id>
+			<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+		</repository>
+	</repositories>
+
+
 
 </project>

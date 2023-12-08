@@ -1,70 +1,121 @@
+# agents:
+#   queue: "default"
+  
+# steps:
+#   - label: "Display Environment Variables"
+#     command: "env"
+
+#   - label: "Build Frontend"
+#     command:
+#       - "cd pa_frontend && npm update"
+#       - "npm install --force"
+#       - "npm install register-service-worker --save"
+#       - "npm run build"
+#     agents:
+#       queue: "default"
+#     plugins:
+#       - docker#v3.8.0:
+#           image: "node:18"
+
+#   - label: "Preview Docker Images"
+#     command: 
+#       - "docker images"
+#       - "docker ps"
+#     agents:
+#       queue: "default"
+
+
+#   - label: "Build Backend"
+#     command: "cd pa_backend && mvn clean install"
+#     agents:
+#       queue: "default"
+#     plugins:
+#       - docker#v3.8.0:
+#           image: "maven:3.9.5" 
+#           environment:
+#             - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
+#             - "DATABASE_USER=swen90014_paplatypus_owner"
+#             - "DATABASE_PASSWORD=platypus"
+
+#     - label: "Preview Docker Images"
+#       command: 
+#         - "docker images"
+#         - "docker ps"
+#       agents:
+#         queue: "default"
+
+#   - label: "Deploy Backend"
+#     command:
+#       # - "docker pull your-backend-image:tag"  # 从Docker镜像存储库拉取后端镜像
+#       - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"  # 运行后端容器
+#     agents:
+#       queue: "default"
+
+
+#   - label: "Deploy Frontend"
+#     command:
+#       # - "docker pull your-frontend-image:tag"  # 从Docker镜像存储库拉取前端镜像
+#       - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"  # 运行前端容器
+#     agents:
+#       queue: "default"
+
 agents:
   queue: "default"
   
 steps:
-  - label: "Display Environment Variables"
-    command: "env"
+  - label: "Check Node.js and Maven"
+    command:
+      - "which node || yum install -y nodejs"
+      - "which mvn || yum install -y maven"
+    agents:
+      queue: "default"
 
   - label: "Build Frontend"
     command:
-      - "cd pa_frontend && npm update"
+      - "cd pa_frontend"
+      - "npm update"
       - "npm install --force"
       - "npm install register-service-worker --save"
       - "npm run build"
     agents:
       queue: "default"
-    plugins:
-      - docker#v3.8.0:
-          image: "node:18"
-
-
-  # - label: "Build Backend"
-  #   command:
-  #     - "export PATH=/usr/local/apache-maven-3.9.6/bin:$PATH"
-  #     - "cd pa_backend && mvn clean install"
-  #   agents:
-  #     queue: "default"
-  #   plugins:
-  #     - docker#v3.8.0:
-  #         image: "maven:3.9.6"
-  #         environment:
-  #           - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
-  #           - "DATABASE_USER=swen90014_paplatypus_owner"
-  #           - "DATABASE_PASSWORD=platypus"
-
-
-  - label: "Preview Docker Images"
-    command: 
-      - "docker images"
-      - "docker ps"
-    agents:
-      queue: "default"
-
 
   - label: "Build Backend"
-    command: "cd pa_backend && mvn clean install"
-    agents:
-      queue: "default"
-    plugins:
-      - docker#v3.8.0:
-          image: "maven:3.9.5" 
-          environment:
-            - "DATABASE_URL=postgresql://8.134.151.21:5432/swen90014_paplatypus_db"
-            - "DATABASE_USER=swen90014_paplatypus_owner"
-            - "DATABASE_PASSWORD=platypus"
-
-
-  - label: "Deploy Backend"
     command:
-      - "docker pull your-backend-image:tag"  # 从Docker镜像存储库拉取后端镜像
-      - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"  # 运行后端容器
+      - "cd pa_backend"
+      - "mvn clean install"
     agents:
       queue: "default"
 
-
-  - label: "Deploy Frontend"
+  - label: "Create Backend Docker Image"
     command:
-      - "docker pull your-frontend-image:tag"  # 从Docker镜像存储库拉取前端镜像
-      - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"  # 运行前端容器
+      - "cd pa_backend"
+      - "docker build -t your-backend-image:tag ."
     agents:
       queue: "default"
+  
+  - label: "Create Frontend Docker Image"
+    command:
+      - "cd pa_frontend"
+      - "docker build -t your-frontend-image:tag ."
+    agents:
+      queue: "default"
+
+  - label: "Run Backend Container"
+    command:
+      - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"
+    agents:
+      queue: "default"
+
+  - label: "Run Frontend Container"
+    command:
+      - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"
+    agents:
+      queue: "default"
+
+  - label: "Display Container Ports"
+    command:
+      - "docker ps -a --format 'Container {{.Names}} is using port {{.Ports}}'"
+    agents:
+      queue: "default"
+
