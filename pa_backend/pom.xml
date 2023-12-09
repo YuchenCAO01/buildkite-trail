@@ -173,13 +173,13 @@
 	</build>
 
 	<!-- 添加 repositories 部分到这里 -->
-	<repositories>
-		<!-- 配置Maven中央仓库的镜像 -->
+<!--	<repositories>
+		&lt;!&ndash; 配置Maven中央仓库的镜像 &ndash;&gt;
 		<repository>
 			<id>aliyunmaven</id>
 			<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
 		</repository>
-	</repositories>
+	</repositories>-->
 
 
 
