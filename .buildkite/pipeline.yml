@@ -59,63 +59,103 @@
 #     agents:
 #       queue: "default"
 
-agents:
-  queue: "default"
+# Version 2
+# agents:
+#   queue: "default"
   
-steps:
-  - label: "Check Node.js and Maven"
-    command:
-      - "which node || yum install -y nodejs"
-      - "which mvn || yum install -y maven"
-    agents:
-      queue: "default"
+# steps:
+#   - label: "Check Node.js and Maven"
+#     command:
+#       - "which node || yum install -y nodejs"
+#       - "which mvn || yum install -y maven"
+#     agents:
+#       queue: "default"
 
-  - label: "Build Frontend"
+#   - label: "Build Frontend"
+#     command:
+#       - "cd pa_frontend"
+#       - "npm update"
+#       - "npm install --force"
+#       - "npm install register-service-worker --save"
+#       - "npm run build"
+#     agents:
+#       queue: "default"
+
+#   - label: "Build Backend"
+#     command:
+#       - "cd pa_backend"
+#       - "mvn clean install"
+#     agents:
+#       queue: "default"
+
+#   - label: "Create Backend Docker Image"
+#     command:
+#       - "cd pa_backend"
+#       - "docker build -t your-backend-image:tag ."
+#     agents:
+#       queue: "default"
+  
+#   - label: "Create Frontend Docker Image"
+#     command:
+#       - "cd pa_frontend"
+#       - "docker build -t your-frontend-image:tag ."
+#     agents:
+#       queue: "default"
+
+#   - label: "Run Backend Container"
+#     command:
+#       - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"
+#     agents:
+#       queue: "default"
+
+#   - label: "Run Frontend Container"
+#     command:
+#       - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"
+#     agents:
+#       queue: "default"
+
+#   - label: "Display Container Ports"
+#     command:
+#       - "docker ps -a --format 'Container {{.Names}} is using port {{.Ports}}'"
+#     agents:
+#       queue: "default"
+
+# Version 3
+agents:
+  - queue=myMac # 本地 Agent
+  - queue=aliServer # 远程 ECS 服务器 Agent
+
+steps:
+  - label: "Build and Push Frontend Docker Image"
     command:
-      - "cd pa_frontend"
-      - "npm update"
+      - "cd pa_frontend && npm update"
       - "npm install --force"
       - "npm install register-service-worker --save"
       - "npm run build"
+      - "docker build -t your-frontend-image:tag -f Dockerfile.frontend ."
+      - "docker push pa-frontend-image:v3"
     agents:
-      queue: "default"
+      queue: myMac # 使用本地 Agent
 
-  - label: "Build Backend"
+  - label: "Build and Push Backend Docker Image"
     command:
-      - "cd pa_backend"
-      - "mvn clean install"
+      - "cd pa_backend && mvn clean install"
+      - "docker build -t your-backend-image:tag -f Dockerfile.backend ."
+      - "docker push pa-backend-image:v3"
     agents:
-      queue: "default"
+      queue: myMac # 使用本地 Agent
 
-  - label: "Create Backend Docker Image"
-    command:
-      - "cd pa_backend"
-      - "docker build -t your-backend-image:tag ."
-    agents:
-      queue: "default"
-  
-  - label: "Create Frontend Docker Image"
-    command:
-      - "cd pa_frontend"
-      - "docker build -t your-frontend-image:tag ."
-    agents:
-      queue: "default"
+  - wait
 
-  - label: "Run Backend Container"
+  - label: "Pull and Run Backend Container on ECS Server"
     command:
-      - "docker run -d -p 8080:8080 --name backend-container your-backend-image:tag"
+      - "docker pull pa-backend-image:v3 && docker run -d -p 8080:8080 --name backend-container pa-backend-image:v3"
     agents:
-      queue: "default"
+      queue: aliServer # 使用远程 ECS 服务器 Agent
 
-  - label: "Run Frontend Container"
+  - label: "Pull and Run Frontend Container on ECS Server"
     command:
-      - "docker run -d -p 80:80 --name frontend-container your-frontend-image:tag"
+      - "docker pull pa-frontend-image:v3 && docker run -d -p 80:80 --name frontend-container pa-frontend-image:v3"
     agents:
-      queue: "default"
-
-  - label: "Display Container Ports"
-    command:
-      - "docker ps -a --format 'Container {{.Names}} is using port {{.Ports}}'"
-    agents:
-      queue: "default"
+      queue: aliServer # 使用远程 ECS 服务器 Agent
 
