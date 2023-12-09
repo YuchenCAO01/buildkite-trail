@@ -122,10 +122,12 @@
 
 # Version 3
 agents:
-  - queue=myMac # 本地 Agent
-  - queue=aliServer # 远程 ECS 服务器 Agent
+  - queue=myMac # running locally
+  - queue=aliServer # running remote ECS Server
 
 steps:
+
+  # Build the Front End project and Create the Docker image then push to the Docker Hub.
   - label: "Build and Push Frontend Docker Image"
     command:
       - "cd pa_frontend && npm update"
@@ -135,27 +137,29 @@ steps:
       - "docker build -t your-frontend-image:tag -f Dockerfile.frontend ."
       - "docker push pa-frontend-image:v3"
     agents:
-      queue: myMac # 使用本地 Agent
+      queue: myMac # Local Agent
 
+  # Build the Back End project and Create the Docker image then push to the Docker Hub.
   - label: "Build and Push Backend Docker Image"
     command:
       - "cd pa_backend && mvn clean install"
       - "docker build -t your-backend-image:tag -f Dockerfile.backend ."
       - "docker push pa-backend-image:v3"
     agents:
-      queue: myMac # 使用本地 Agent
+      queue: myMac # Local Agent
 
   - wait
 
+  # Let the agent on the Server pull the images from the Docker Hub
   - label: "Pull and Run Backend Container on ECS Server"
     command:
       - "docker pull pa-backend-image:v3 && docker run -d -p 8080:8080 --name backend-container pa-backend-image:v3"
     agents:
-      queue: aliServer # 使用远程 ECS 服务器 Agent
+      queue: aliServer # Remote Agent
 
   - label: "Pull and Run Frontend Container on ECS Server"
     command:
       - "docker pull pa-frontend-image:v3 && docker run -d -p 80:80 --name frontend-container pa-frontend-image:v3"
     agents:
-      queue: aliServer # 使用远程 ECS 服务器 Agent
+      queue: aliServer # Remote Agent
 
