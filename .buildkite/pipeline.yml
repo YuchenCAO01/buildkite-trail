@@ -121,9 +121,9 @@
 #       queue: "default"
 
 # # Version 3
-agents:
-  - queue=myMac # running locally
-#   - queue=aliServer # running remote ECS Server
+# agents:
+#   queue: "myMac" # running locally
+#   queue: "liServer" # running remote ECS Server
 
 steps:
 
