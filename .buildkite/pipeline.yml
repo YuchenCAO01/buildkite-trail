@@ -134,16 +134,21 @@ steps:
       - "npm install --force"
       - "npm install register-service-worker --save"
       - "npm run build"
-      - "docker build -t pa-frontend-image:v3 -f Dockerfile.frontend ."
+      - "docker build -t pa-frontend-image:v3 -f Dockerfile"
       - "docker push pa-frontend-image:v3"
     agents:
       queue: myMac # Local Agent
+
+  # - label: "Build and Pusd Frontend Docker Image"
+  #   command:
+  #   agents:
+  #     queue: myMac
 
   # Build the Back End project and Create the Docker image then push to the Docker Hub.
   - label: "Build and Push Backend Docker Image"
     command:
       - "cd pa_backend && mvn clean install"
-      - "docker build -t pa-backend-image:v3 -f Dockerfile.backend ."
+      - "docker build -t pa-backend-image:v3 -f Dockerfile"
       - "docker push pa-backend-image:v3"
     agents:
       queue: myMac # Local Agent
