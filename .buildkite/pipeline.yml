@@ -123,7 +123,7 @@
 # # Version 3
 # agents:
 #   queue: "myMac" # running locally
-#   queue: "liServer" # running remote ECS Server
+#   queue: "aliServer" # running remote ECS Server
 
 steps:
 
