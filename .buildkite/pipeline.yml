@@ -8,6 +8,12 @@ steps:
       - "npm install --force"
       - "npm install register-service-worker --save"
       - "npm run build"
+    agents:
+      queue: myMac # Local Agent
+
+  - label : "Push Frontend Docker Image"
+    command:
+      - "cd pa_frontend"
       - "docker build -t pa-frontend-image:v3 -f Dockerfile ."
       - "docker push pa-frontend-image:v3"
     agents:
