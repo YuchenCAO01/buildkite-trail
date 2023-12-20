@@ -8,6 +8,10 @@ public class PaPlatypusBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaPlatypusBackendApplication.class, args);
+		System.out.println("");
+		System.out.println("=============================");
+		System.out.println("= Application Start Success =");
+		System.out.println("=============================");
 	}
 
 
