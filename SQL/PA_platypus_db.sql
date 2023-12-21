@@ -87,7 +87,8 @@ CREATE TABLE public.assignment (
     participation_weighting integer DEFAULT 60,
     type character varying(255),
     default_participation_weighting integer DEFAULT 60,
-	method VARCHAR(100)
+	method VARCHAR(100),
+    defaultMethod VARCHAR(50)
 );
 
 
