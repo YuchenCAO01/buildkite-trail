@@ -22,7 +22,7 @@ SET row_security = off;
 -- TOC entry 853 (class 1247 OID 16538)
 -- Name: accesses; Type: TYPE; Schema: public; Owner: swen90014_paplatypus_owner
 --
-DROP TYPE public.accesses;
+
 CREATE TYPE public.accesses AS ENUM (
     'SubjectCoordinator',
     'Tutor',
@@ -36,7 +36,7 @@ ALTER TYPE public.accesses OWNER TO swen90014_paplatypus_owner;
 -- TOC entry 850 (class 1247 OID 16463)
 -- Name: activities; Type: TYPE; Schema: public; Owner: swen90014_paplatypus_owner
 --
-DROP TYPE public.activities;
+
 CREATE TYPE public.activities AS ENUM (
     'Exam',
     'Quiz',
@@ -53,7 +53,7 @@ ALTER TYPE public.activities OWNER TO swen90014_paplatypus_owner;
 -- TOC entry 847 (class 1247 OID 16436)
 -- Name: sexual; Type: TYPE; Schema: public; Owner: swen90014_paplatypus_owner
 --
-DROP TYPE public.sexual;
+
 CREATE TYPE public.sexual AS ENUM (
     'Male',
     'Female',
@@ -71,7 +71,7 @@ SET default_table_access_method = heap;
 -- TOC entry 223 (class 1259 OID 26107)
 -- Name: assignment; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public.assignment;
+
 CREATE TABLE public.assignment (
     id integer NOT NULL,
     description character varying(500),
@@ -86,19 +86,17 @@ CREATE TABLE public.assignment (
     name character varying(255) NOT NULL,
     participation_weighting integer DEFAULT 60,
     type character varying(255),
-    default_participation_weighting integer DEFAULT 60,
-	method VARCHAR(100)
+    default_participation_weighting integer DEFAULT 60
 );
 
 
-ALTER TABLE public.assignment OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.assignment OWNER TO postgres;
 
 --
 -- TOC entry 219 (class 1259 OID 26079)
 -- Name: course; Type: TABLE; Schema: public; Owner: postgres
 --
 
-DROP TABLE IF EXISTS public.course;
 CREATE TABLE public.course (
     course_id integer NOT NULL,
     id integer NOT NULL,
@@ -108,13 +106,13 @@ CREATE TABLE public.course (
 );
 
 
-ALTER TABLE public.course OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.course OWNER TO postgres;
 
 --
 -- TOC entry 218 (class 1259 OID 26078)
 -- Name: course_course_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
-DROP SEQUENCE IF EXISTS public.course_course_id_seq;
+
 CREATE SEQUENCE public.course_course_id_seq
     AS integer
     START WITH 1
@@ -124,7 +122,7 @@ CREATE SEQUENCE public.course_course_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.course_course_id_seq OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.course_course_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3395 (class 0 OID 0)
@@ -139,7 +137,7 @@ ALTER SEQUENCE public.course_course_id_seq OWNED BY public.course.course_id;
 -- TOC entry 221 (class 1259 OID 26090)
 -- Name: enrollment; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public.enrollment;
+
 CREATE TABLE public.enrollment (
     id integer NOT NULL,
     type character varying(255) NOT NULL,
@@ -149,7 +147,7 @@ CREATE TABLE public.enrollment (
 );
 
 
-ALTER TABLE public.enrollment OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.enrollment OWNER TO postgres;
 
 --
 -- TOC entry 220 (class 1259 OID 26089)
@@ -165,7 +163,7 @@ CREATE SEQUENCE public.enrollment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.enrollment_id_seq OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.enrollment_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3396 (class 0 OID 0)
@@ -180,7 +178,7 @@ ALTER SEQUENCE public.enrollment_id_seq OWNED BY public.enrollment.id;
 -- TOC entry 222 (class 1259 OID 26100)
 -- Name: score; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public.score;
+
 CREATE TABLE public.score (
     id integer NOT NULL,
     score numeric,
@@ -197,13 +195,13 @@ CREATE TABLE public.score (
 );
 
 
-ALTER TABLE public.score OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.score OWNER TO postgres;
 
 --
 -- TOC entry 215 (class 1259 OID 26057)
 -- Name: student; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public.student;
+
 CREATE TABLE public.student (
     student_id integer NOT NULL,
     id integer NOT NULL,
@@ -216,7 +214,7 @@ CREATE TABLE public.student (
 );
 
 
-ALTER TABLE public.student OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.student OWNER TO postgres;
 
 --
 -- TOC entry 214 (class 1259 OID 26056)
@@ -232,7 +230,7 @@ CREATE SEQUENCE public.student_student_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.student_student_id_seq OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.student_student_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3397 (class 0 OID 0)
@@ -247,7 +245,7 @@ ALTER SEQUENCE public.student_student_id_seq OWNED BY public.student.student_id;
 -- TOC entry 217 (class 1259 OID 26068)
 -- Name: teacher; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public.teacher;
+
 CREATE TABLE public.teacher (
     teacher_id integer NOT NULL,
     id integer NOT NULL,
@@ -260,7 +258,7 @@ CREATE TABLE public.teacher (
 );
 
 
-ALTER TABLE public.teacher OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.teacher OWNER TO postgres;
 
 --
 -- TOC entry 216 (class 1259 OID 26067)
@@ -276,7 +274,7 @@ CREATE SEQUENCE public.teacher_teacher_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.teacher_teacher_id_seq OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public.teacher_teacher_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3398 (class 0 OID 0)
@@ -291,7 +289,7 @@ ALTER SEQUENCE public.teacher_teacher_id_seq OWNED BY public.teacher.teacher_id;
 -- TOC entry 224 (class 1259 OID 26116)
 -- Name: user; Type: TABLE; Schema: public; Owner: postgres
 --
-DROP TABLE IF EXISTS public."user";
+
 CREATE TABLE public."user" (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
@@ -302,7 +300,7 @@ CREATE TABLE public."user" (
 );
 
 
-ALTER TABLE public."user" OWNER TO swen90014_paplatypus_owner;
+ALTER TABLE public."user" OWNER TO postgres;
 
 --
 -- TOC entry 3211 (class 2604 OID 26082)

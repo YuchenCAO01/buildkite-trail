@@ -17,9 +17,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/swen90014_paplatypus_db
-    username: postgres
-    password: CYC0714#
+    url: jdbc:postgresql://182.92.169.27:5432/swen90014_paplatypus_db
+    username:  swen90014_paplatypus_owner
+    password: pa_password
     druid:
       initial-size: 8
       min-idle: 5
