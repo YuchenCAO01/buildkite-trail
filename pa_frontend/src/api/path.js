@@ -1,8 +1,8 @@
 //const port = process.env.PORT || 8081
 
 const base = {
-  // baseUrlCICD : 'http://8.134.151.21/api',
-  baseUrlCICD : 'http://localhost:8082',
+  baseUrlCICD : 'http://182.92.169.27/pa-api',
+  // baseUrlCICD : 'http://localhost:8082',
   //baseUrlRelease    
   //baseUrlDeployed
 
