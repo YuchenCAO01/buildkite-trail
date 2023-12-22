@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
 #  main:
-#    web-application-type: none
+#  web-application-type: none
   mail:
     host: smtp.gmail.com
     port: 587
