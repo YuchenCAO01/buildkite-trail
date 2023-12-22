@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory where your Dockerfile is located
-DOCKERFILE_DIR="/pa_frontend"
+DOCKERFILE_DIR="pa_frontend"
 
 # Image name and tag
 IMAGE_NAME="yuchencao01/pa-frontend"
