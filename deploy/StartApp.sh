@@ -18,9 +18,9 @@ docker stop $BACKEND_CONTAINER_NAME
 docker rm $BACKEND_CONTAINER_NAME
 
 # Pull latest images
-echo "Pulling latest Docker images..."
-docker pull $FRONTEND_IMAGE
-docker pull $BACKEND_IMAGE
+# echo "Pulling latest Docker images..."
+# docker pull $FRONTEND_IMAGE
+# docker pull $BACKEND_IMAGE
 
 # Run frontend container
 echo "Starting frontend container..."

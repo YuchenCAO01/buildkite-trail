@@ -76,7 +76,7 @@ steps:
   - wait
 
   
-  - label: "Pull and Run Backend Container on ECS Server"
+  - label: "Start the Dockers, Run Application"
     command:
       - "cd deploy"
       - "chmod +x StartApp.sh"
