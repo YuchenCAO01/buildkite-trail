@@ -4,9 +4,9 @@ const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = defineConfig({
-   devServer: {
-     historyApiFallback: true,
-     allowedHosts: 'all',
+  devServer: {
+    historyApiFallback: true,
+    allowedHosts: 'all',
     proxy: {
       // '/subject': {
       //   target: 'http://localhost:8080',
@@ -14,7 +14,8 @@ module.exports = defineConfig({
       //   pathRewrite: { '^/subject': '' },
       // },
     },
-   },
+  },
+  publicPath: process.env.NODE_ENV === 'production' ? '/pa-app/' : '/',
   transpileDependencies: true,
   configureWebpack: {
     plugins: [
