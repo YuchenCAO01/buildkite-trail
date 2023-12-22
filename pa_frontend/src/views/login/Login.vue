@@ -60,6 +60,7 @@ export default {
     transform: translate(-50%, -50%);
     font-size: 25px; 
     color: black; 
+    background-color: #c9ff5e;
 
     .username{
       font-size: 18px; 
